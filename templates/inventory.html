@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{user.display_name}}'s {{inv.appid|appid}} Inventory | servers.tf</title>
+    </head>
+    <body>
+        <h1>{{user.display_name}}'s {{inv.appid|appid}} Inventory</h1>
+        <ul>
+            <li>Owner: <a href="{{url_for('stat_user', steamid=steamid)}}">{{user.display_name}}</a></li>
+            <li>App ID: <a href="http://steamdb.info/app/{{inv.appid}}/">{{inv.appid}}</a></li>
+            <li>Schema items: {{inv.schema|length}}</li>
+            <li>Inventory slots: {{inv.capacity}}</li>
+            <li>Inventory items: {{inv|length}}</li>
+            <li>Capacity utilisation: {{inv.utilisation|round(precision=3) * 100}}%</li>
+        </ul>
+        <table>
+            <tr>
+                {%- for col in columns -%}
+                <th>{{col|title}}</th>
+                {%- endfor -%}
+            </tr>
+            {%- for item in inv -%}
+            <tr>
+                {%- for col in columns -%}
+                    {%- if col == 'icons' -%}
+                    <td><img src="{{item[col].small}}"></td>
+                    {%- else -%}
+                    <td>{{item[col]}}</td>
+                    {%- endif -%}
+                {%- endfor -%}
+            </tr>
+            {%- endfor -%}
+        </table>
+    </body>
+</html>

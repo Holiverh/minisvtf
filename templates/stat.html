@@ -1,4 +1,4 @@
-<DOCTYPE html>
+<!DOCTYPE html>
 <html>
     <head>
         <title>{{info.server_name}} | servers.tf</title>
@@ -15,7 +15,7 @@
             <li>Version: {{info.version}}</li>
         </ul>
         <h2>{{players.player_count}}/{{info.max_players}} Players
-        {%- if info.bot_count > 0 -%}
+        {% if info.bot_count > 0 -%}
             ({{info.bot_count}} bots)
         {%- endif -%}
         </h2>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{user.display_name}} | servers.tf</title>
+    </html>
+    <body>
+        <a href="{{user.url}}"><h1>{{user.display_name}}
+        {% if user.real_name -%}
+            ({{user.real_name}})
+        {%- endif -%}</h1></a>
+        <img src="{{user.avatars['184x184']}}">
+        <img src="{{user.avatars['64x64']}}">
+        <img src="{{user.avatars['32x32']}}">
+        <ul>
+            <li>Created: {{user.created}}</li>
+            <li>Status: {{user|status}}</li>
+            <li>Profile visiblity: {{user|visibility}}</li>
+            <li>Last log off: {{user.last_logoff}}</li>
+            {%- if user.country -%}
+            <li>Location: {{user.country}}</li>
+            {%- endif -%}
+        </ul>
+        <h2>Ban Status</h2>
+        <ul>
+            <li>Community banned: {{user.is_community_banned|yesno}}</li>
+            <li>VAC banned: {{user.is_vac_banned|yesno}}</li>
+            <li>Trade banned:
+            {% if user.is_trade_banned -%}
+                Yes
+            {%- elif user.is_on_trade_probation -%}
+                Probation
+            {%- else -%}
+                No
+            {%- endif -%}</li>
+        </ul>
+        <h2>Inventories</h2>
+        <ul>
+            <li><a href="{{url_for('inventory', steamid=steamid, inv='tf2')}}">Team Fortress 2</a></li>
+            <li><a href="{{url_for('inventory', steamid=steamid, inv='dota')}}">Dota 2</a></li>
+            <li><a href="{{url_for('inventory', steamid=steamid, inv='portal')}}">Portal 2</a></li>
+            <li><a href="{{url_for('inventory', steamid=steamid, inv='trading-cards')}}">Steam Trading Cards</a></li>
+        </ul>
+    </body>
+</html>
