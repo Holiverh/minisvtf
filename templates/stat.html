@@ -1,0 +1,50 @@
+<DOCTYPE html>
+<html>
+    <head>
+        <title>{{info.server_name}} | servers.tf</title>
+    </head>
+    <body>
+        <h1>{{info.server_name}}</h1>
+        <a href="steam://connect/{{host}}:{{port}}">Connect</a>
+        <ul>
+            <li>Map: {{info.map}}</li>
+            <li>Game: <a href="http://steamdb.info/app/{{info.app_id}}/">{{info.game}}</a> ({{info.folder}})</li>
+            <li>Platform: {{type_name}} on {{plat_name}}</li>
+            <li>Password protected: {{info.password_protected|yesno}}</li>
+            <li>VAC: {{info.vac_enabled|yesno}}</li>
+            <li>Version: {{info.version}}</li>
+        </ul>
+        <h2>{{players.player_count}}/{{info.max_players}} Players
+        {%- if info.bot_count > 0 -%}
+            ({{info.bot_count}} bots)
+        {%- endif -%}
+        </h2>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Score</th>
+                <th>Duration</th>
+            </tr>
+            {%- for player in players.players|sort(True, attribute="score") -%}
+            <tr>
+                <td>{{player.name}}</td>
+                <td>{{player.score}}</td>
+                <td>{{player.duration|timedelta}}</td>
+            </tr>
+            {%- endfor -%}
+        </table>
+        <h2>Configuration</h2>
+        <table>
+            <tr>
+                <th>Convar</th>
+                <th>Value</th>
+            </tr>
+            {%- for convar, val in rules.rules.items() -%}
+            <tr>
+                <td>{{convar}}</td>
+                <td>{{val}}</td>
+            </tr>
+            {%- endfor -%}
+        </table>
+    </body>
+</html>
